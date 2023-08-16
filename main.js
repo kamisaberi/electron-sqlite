@@ -39,7 +39,12 @@ app.on("ready", () => {
 
   ipcMain.on("GET_USERS", async function (e, d) {
     let data = await dbHelper.getUsers();
-    e.reply("SEND_USERS", data);
+    e.reply("GET_USERS", data);
+  });
+
+  ipcMain.on("SAVE_USER", async function (e, data) {
+    let ret = dbHelper.saveUser(data);
+    e.reply("SAVE_USER", ret);
   });
 });
 

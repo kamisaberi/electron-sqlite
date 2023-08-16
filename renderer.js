@@ -45,7 +45,7 @@ $("#btn2").on("click", () => {
 
 $("#btn3").on("click", () => {
   ipc.send("GET_USERS");
-  ipc.on("SEND_USERS", function (evt, rows) {
+  ipc.on("GET_USERS", function (evt, rows) {
     console.log(rows);
     $("#result").html("");
     $("#logs").html("send signal test (awesome)");
@@ -62,4 +62,15 @@ $("#btnInsert").on("click", () => {
   knex("users")
     .insert({ name: name, family: family, age: age })
     .then(() => {});
+});
+
+$("#btnInsertUsingSignal").on("click", () => {
+  let name = $("#txtName").val();
+  let family = $("#txtFamily").val();
+  let age = $("#txtAge").val();
+  
+  ipc.send("SAVE_USER", {name : name , family : family , age : age});
+  ipc.on("SAVE_USER", function (evt, data) {
+    console.log(data)
+  });
 });

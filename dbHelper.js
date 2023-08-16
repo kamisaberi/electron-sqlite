@@ -13,3 +13,10 @@ module.exports.getUsers = function getUsers() {
     return res;
   });
 };
+
+module.exports.saveUser = function saveUser(data) {
+  knex("users")
+    .insert(data)
+    .then(() => {});
+  return true;
+};
