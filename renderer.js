@@ -6,10 +6,8 @@
  * to expose Node.js functionality from the main process.
  */
 
-const electron = require("electron");
 const path = require("path");
 const $ = require("jquery");
-var resultEl = document.getElementById("result");
 var knex = require("knex")({
   client: "sqlite3",
   connection: {
@@ -17,6 +15,10 @@ var knex = require("knex")({
   },
 });
 
+const electron = require("electron");
+const ipc = electron.ipcRenderer;
+
+const signals = require("./databaseHelper");
 let btn = document.getElementById("btn1");
 btn.addEventListener("click", () => {
   let result = knex.select("FirstName").from("User");
@@ -25,7 +27,6 @@ btn.addEventListener("click", () => {
       $("#result").append(row.FirstName.toString() + "<br>");
     }
   });
-
 });
 
 $("#btn2").on("click", () => {
@@ -34,5 +35,17 @@ $("#btn2").on("click", () => {
     for (let row of rows) {
       $("#result").append(row.FirstName.toString() + "<br>");
     }
+  });
+});
+
+$("#btn3").on("click", () => {
+  console.log("11");
+  ipc.send("GET_USERS");
+  ipc.on("SEND_USERS", function (evt, rows) {
+    console.log(rows);
+    // for (let row of rows) {
+    //   console.log("33");
+    //   $("#result").append(row.FirstName.toString() + "<br>");
+    // }
   });
 });
