@@ -1,0 +1,20 @@
+{
+  "name": "melodic-smile-stimulate-grf71",
+  "productName": "melodic-smile-stimulate-grf71",
+  "description": "My Electron application description",
+  "keywords": [],
+  "main": "./main.js",
+  "version": "1.0.0",
+  "author": "pc",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "jquery": "^3.7.0",
+    "knex": "^2.5.1",
+    "sqlite3": "^5.1.6"
+  },
+  "devDependencies": {
+    "electron": "25.4.0"
+  }
+}
