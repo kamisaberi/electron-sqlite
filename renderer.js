@@ -18,10 +18,13 @@ var knex = require("knex")({
 const electron = require("electron");
 const ipc = electron.ipcRenderer;
 
-const signals = require("./databaseHelper");
+const dbHelper = require("./dbHelper");
 let btn = document.getElementById("btn1");
 btn.addEventListener("click", () => {
   let result = knex.select("FirstName").from("User");
+  $("#result").html("");
+  $("#logs").html("java script test");
+
   result.then((rows) => {
     for (let row of rows) {
       $("#result").append(row.FirstName.toString() + "<br>");
@@ -31,6 +34,8 @@ btn.addEventListener("click", () => {
 
 $("#btn2").on("click", () => {
   let result = knex.select("FirstName").from("User");
+  $("#result").html("");
+  $("#logs").html("jquery test");
   result.then((rows) => {
     for (let row of rows) {
       $("#result").append(row.FirstName.toString() + "<br>");
@@ -39,13 +44,13 @@ $("#btn2").on("click", () => {
 });
 
 $("#btn3").on("click", () => {
-  console.log("11");
   ipc.send("GET_USERS");
   ipc.on("SEND_USERS", function (evt, rows) {
     console.log(rows);
-    // for (let row of rows) {
-    //   console.log("33");
-    //   $("#result").append(row.FirstName.toString() + "<br>");
-    // }
+    $("#result").html("");
+    $("#logs").html("send signal test (awesome)");
+    for (let row of rows) {
+      $("#result").append(row.FirstName.toString() + "<br>");
+    }
   });
 });

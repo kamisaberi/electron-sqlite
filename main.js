@@ -1,7 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const url = require("url");
-const dbHelper = require("./databaseHelper");
+const dbHelper = require("./dbHelper");
 var knex = require("knex")({
   client: "sqlite3",
   connection: {
@@ -37,13 +37,9 @@ app.on("ready", () => {
   //   });
   // });
 
-  ipcMain.on("GET_USERS", function (e, d) {
-    let data = dbHelper.getUsers();
-    data.then(function (rows) {
-      console.log(rows);
-    });
-
-    e.reply("SEND_USERS" , "sakdhasdkhsadjkhsakdj")
+  ipcMain.on("GET_USERS", async function (e, d) {
+    let data = await dbHelper.getUsers();
+    e.reply("SEND_USERS", data);
   });
 });
 
