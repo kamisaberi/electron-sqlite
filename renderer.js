@@ -6,8 +6,33 @@
  * to expose Node.js functionality from the main process.
  */
 
-let btn = document.getElementById("btn1");
+const electron = require("electron");
+const path = require("path");
+const $ = require("jquery");
+var resultEl = document.getElementById("result");
+var knex = require("knex")({
+  client: "sqlite3",
+  connection: {
+    filename: path.join(__dirname, "database.sqlite"),
+  },
+});
 
+let btn = document.getElementById("btn1");
 btn.addEventListener("click", () => {
-  console.log("hello world");
+  let result = knex.select("FirstName").from("User");
+  result.then((rows) => {
+    for (let row of rows) {
+      $("#result").append(row.FirstName.toString() + "<br>");
+    }
+  });
+
+});
+
+$("#btn2").on("click", () => {
+  let result = knex.select("FirstName").from("User");
+  result.then((rows) => {
+    for (let row of rows) {
+      $("#result").append(row.FirstName.toString() + "<br>");
+    }
+  });
 });
