@@ -8,7 +8,7 @@ var knex = require("knex")({
 });
 
 module.exports.getUsers = function getUsers() {
-  let result = knex.select("FirstName").from("User");
+  let result = knex.select("name").from("users");
   return result.then((res) => {
     return res;
   });

@@ -21,24 +21,24 @@ const ipc = electron.ipcRenderer;
 const dbHelper = require("./dbHelper");
 let btn = document.getElementById("btn1");
 btn.addEventListener("click", () => {
-  let result = knex.select("FirstName").from("User");
+  let result = knex.select("name").from("users");
   $("#result").html("");
   $("#logs").html("java script test");
 
   result.then((rows) => {
     for (let row of rows) {
-      $("#result").append(row.FirstName.toString() + "<br>");
+      $("#result").append(row.name.toString() + "<br>");
     }
   });
 });
 
 $("#btn2").on("click", () => {
-  let result = knex.select("FirstName").from("User");
+  let result = knex.select("name").from("users");
   $("#result").html("");
   $("#logs").html("jquery test");
   result.then((rows) => {
     for (let row of rows) {
-      $("#result").append(row.FirstName.toString() + "<br>");
+      $("#result").append(row.name.toString() + "<br>");
     }
   });
 });
@@ -50,7 +50,16 @@ $("#btn3").on("click", () => {
     $("#result").html("");
     $("#logs").html("send signal test (awesome)");
     for (let row of rows) {
-      $("#result").append(row.FirstName.toString() + "<br>");
+      $("#result").append(row.name.toString() + "<br>");
     }
   });
+});
+
+$("#btnInsert").on("click", () => {
+  let name = $("#txtName").val();
+  let family = $("#txtFamily").val();
+  let age = $("#txtAge").val();
+  knex("users")
+    .insert({ name: name, family: family, age: age })
+    .then(() => {});
 });

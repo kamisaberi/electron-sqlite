@@ -31,7 +31,7 @@ app.on("ready", () => {
     mainWindow.show();
   });
   // ipcMain.on("mainWindowLoaded", function () {
-  //   let result = knex.select("FirstName").from("User");
+  //   let result = knex.select("name").from("users");
   //   result.then(function (rows) {
   //     mainWindow.webContents.send("resultSent", rows);
   //   });
